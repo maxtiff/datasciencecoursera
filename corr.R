@@ -8,6 +8,22 @@ corr <- function(directory, threshold = 0) {
   ## nitrate and sulfate; the default is 0
   
   ## Return a numeric vector of correlations
+  files <- dir(directory)
   
-
+  for (i in seq_along(files)) {
+    
+    obs <- complete(directory, i)$nobs
+    print(obs)
+    
+    if (obs > threshold) {
+      
+      doc <- files[i]
+      path <- paste(directory, doc, sep="/")
+      data <- read.csv(path)
+      
+      keep <- complete.cases(data)
+      print(keep[data])
+    }
+  }
+  
 }
