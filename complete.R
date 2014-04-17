@@ -21,8 +21,13 @@ complete <- function(directory, id = 1:332) {
     path <- paste(directory, doc, sep="/")
     data <- read.csv(path)
     
-    keep <- data[complete.cases(data),]
+    #keep <- data[complete.cases(data),]
+    keep <- complete.cases(data)
+    
+    nobs <- sum(keep)
   
+    num_kept <- data.frame(id, nobs)
+    return(num_kept)
   }
   
 }
