@@ -14,20 +14,29 @@ complete <- function(directory, id = 1:332) {
   ## number of complete cases
   
   files <- dir(directory)
+  vect1 <- numeric(0)
+  vect2 <- numeric(0)
+  complete_frame <- data.frame(id=vect1, nobs= vect2)
+  
   
   for (i in id) {
     
+    # Read in file
     doc <- files[i]
     path <- paste(directory, doc, sep="/")
     data <- read.csv(path)
     
-    #keep <- data[complete.cases(data),]
+    # Count number of observations
     keep <- complete.cases(data)
-    
     nobs <- sum(keep)
+    
+    # Add ID and number of obs to vector
+    vect1 <- c(vect1, i)
+    vect2 <- c(vect2, nobs)
   
-    num_kept <- data.frame(id, nobs)
-    return(num_kept)
   }
+  
+  complete_frame <- data.frame(id=vect1, nobs=vect2)
+  return(complete_frame)
   
 }
